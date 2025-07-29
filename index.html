@@ -6,25 +6,54 @@
     <title>AIR-TEC Services</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
     <style>
+      :root {
+        --primary: #d62828;
+        --secondary: #333333;
+      }
+
       body {
         background-color: #f9fbfd;
       }
+
+      nav img.logo {
+        height: 40px;
+        margin-right: 0.5rem;
+        vertical-align: middle;
+      }
+
       header.hero {
-        background: url('https://source.unsplash.com/1600x600/?aircraft,aviation') center/cover no-repeat;
+        background: url('https://source.unsplash.com/1600x600/?aircraft,runway') center/cover no-repeat;
         padding: 6rem 1rem;
         color: white;
         text-align: center;
-        background-blend-mode: multiply;
-        background-color: rgba(0, 38, 77, 0.6);
+        background-color: rgba(0, 0, 0, 0.5);
+        background-blend-mode: darken;
       }
+
       header.hero h1 {
         font-size: 3rem;
         margin-bottom: 0.5rem;
+        color: #ffffff;
       }
+
       header.hero p {
         font-size: 1.25rem;
-        opacity: 0.9;
+        opacity: 0.95;
+        color: #dddddd;
       }
+
+      h2, h3 {
+        color: var(--primary);
+      }
+
+      ul li::marker {
+        color: var(--primary);
+      }
+
+      footer {
+        margin-top: 4rem;
+      }
+
       section:not(:last-child) {
         margin-bottom: 4rem;
       }
@@ -34,7 +63,9 @@
 
     <nav class="container-fluid">
       <ul>
-        <li><strong>AIR-TEC</strong></li>
+        <li>
+          <img src="air-tec website logo.jpg" alt="AIR-TEC logo" class="logo" />
+        </li>
       </ul>
       <ul>
         <li><a href="#">Home</a></li>
