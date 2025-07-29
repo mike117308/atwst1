@@ -5,107 +5,127 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AIR-TEC Services</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
     <style>
       :root {
         --primary: #d62828;
-        --dark: #1c1c1c;
-        --light: #f9fbfd;
+        --dark: #121212;
+        --light: #ffffff;
         --gray: #666666;
       }
 
       body {
+        font-family: 'Roboto', sans-serif;
         background-color: var(--light);
         color: var(--dark);
-        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
       }
 
       nav.container-fluid {
-        background-color: var(--primary);
-        color: white;
-        padding: 1rem;
+        background: #ffffff;
+        padding: 1rem 2rem;
+        border-bottom: 1px solid #eaeaea;
       }
 
-      nav.container-fluid a {
-        color: white;
+      nav img.logo {
+        height: 40px;
+        vertical-align: middle;
+      }
+
+      nav a {
+        color: var(--dark);
         font-weight: 500;
-        transition: opacity 0.2s;
       }
 
-      nav.container-fluid a:hover {
-        opacity: 0.8;
-      }
-
-      img.logo {
-        height: 42px;
-        border-radius: 4px;
+      nav a:hover {
+        color: var(--primary);
       }
 
       header.hero {
-        background: linear-gradient(
-            rgba(0, 0, 0, 0.5), 
-            rgba(0, 0, 0, 0.5)
-          ),
-          url('https://source.unsplash.com/1600x600/?airplane,hanger')
-          center/cover no-repeat;
+        background: linear-gradient(rgba(214, 40, 40, 0.75), rgba(214, 40, 40, 0.75)),
+          url('https://source.unsplash.com/1600x700/?airplane,hangar') center/cover no-repeat;
         color: white;
         text-align: center;
-        padding: 6rem 1rem 4rem;
-        box-shadow: inset 0 -4px 10px rgba(0, 0, 0, 0.3);
+        padding: 6rem 2rem 3rem;
       }
 
       header.hero h1 {
-        font-size: 3rem;
+        font-size: 2.5rem;
+        font-weight: 700;
         margin-bottom: 0.5rem;
-        color: #fff;
       }
 
       header.hero p {
         font-size: 1.2rem;
         max-width: 700px;
         margin: 0 auto;
-        color: #f1f1f1;
       }
 
-      main.container section {
-        padding: 2rem 0;
+      .glass-box {
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        padding: 2rem;
+        border-radius: 10px;
+        max-width: 800px;
+        margin: -4rem auto 3rem auto;
       }
 
-      h2, h3 {
+      .glass-box h2 {
         color: var(--primary);
-        font-weight: 600;
+        font-size: 1.5rem;
+      }
+
+      section {
+        max-width: 800px;
+        margin: 0 auto 3rem auto;
+        padding: 0 1.5rem;
+      }
+
+      section h2 {
+        color: var(--primary);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      ul {
+        padding-left: 1.2rem;
+      }
+
+      ul li {
+        margin-bottom: 0.5rem;
       }
 
       ul li::marker {
         color: var(--primary);
       }
 
-      .highlight-box {
-        background-color: white;
-        border: 1px solid #ddd;
-        border-left: 5px solid var(--primary);
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      .contact p {
+        font-size: 1.1rem;
+        margin-bottom: 0.4rem;
       }
 
       footer {
-        padding: 2rem 0;
-        background-color: #eee;
+        background-color: #222;
+        color: #ccc;
         text-align: center;
+        padding: 2rem 1rem;
         font-size: 0.9rem;
-        color: var(--gray);
       }
 
-      button[type="submit"] {
-        background-color: var(--primary);
-        color: white;
-        font-weight: bold;
-        border: none;
+      footer a {
+        color: #eee;
+        margin: 0 0.5rem;
       }
 
-      button[type="submit"]:hover {
-        background-color: #b41f1f;
-        cursor: pointer;
+      @media (max-width: 600px) {
+        header.hero h1 {
+          font-size: 2rem;
+        }
+
+        .glass-box, section {
+          margin-left: 1rem;
+          margin-right: 1rem;
+        }
       }
     </style>
   </head>
@@ -114,66 +134,47 @@
     <nav class="container-fluid">
       <ul>
         <li>
-          <img src="https://files.catbox.moe/jr3hfw.jpg" alt="AIR-TEC logo" class="logo" />
+          <img src="https://files.catbox.moe/d4tmw3.jpg" alt="AIR-TEC logo" class="logo" />
         </li>
       </ul>
       <ul>
         <li><a href="#">Home</a></li>
         <li><a href="#">Careers</a></li>
-        <li><a href="#" role="button">Contact</a></li>
+        <li><a href="#">Contact</a></li>
       </ul>
     </nav>
 
     <header class="hero">
-      <h1>Aircraft Maintenance Staffing</h1>
-      <p>We connect top-tier aviation technicians with leading maintenance providers across the country.</p>
+      <h1>AIRCRAFT MAINTENANCE STAFFING</h1>
+      <p>Connecting elite aviation technicians with world-class employers.</p>
     </header>
 
-    <main class="container">
-      <section>
-        <div class="highlight-box">
-          <hgroup>
-            <h2>Our Mission</h2>
-            <h3>Precision. Safety. Reliability.</h3>
-          </hgroup>
-          <p>
-            AIR-TEC specializes in sourcing, vetting, and placing certified aviation maintenance professionals. Our commitment to operational excellence ensures that our clients and technicians work in perfect alignment.
-          </p>
-        </div>
+    <div class="glass-box">
+      <h2>Our Mission</h2>
+      <p>
+        AIR-TEC specializes in sourcing, vetting and placing certified aviation maintenance professionals across
+        the nation. Our commitment to operational excellence ensures our clients and technicians work in perfect
+        alignment with the highest safety and quality standards.
+      </p>
+    </div>
 
-        <h3>Why Choose AIR-TEC?</h3>
-        <ul>
-          <li>Nationwide network of A&P certified technicians</li>
-          <li>Real-time availability and placement support</li>
-          <li>Deep expertise in MRO, FBO, and airline environments</li>
-        </ul>
+    <section>
+      <h2>Why Choose AIR-TEC?</h2>
+      <ul>
+        <li>Nationwide network of A&P certified technicians</li>
+        <li>Real-time availability and placement support</li>
+        <li>Deep expertise in MRO, FBO, and airline environments</li>
+      </ul>
+    </section>
 
-        <h3>Contact Us</h3>
-        <p>
-          📧 <a href="mailto:contact@airtecservices.com">contact@airtecservices.com</a><br>
-          ☎️ (555) 123-4567
-        </p>
-      </section>
-    </main>
-
-    <section aria-label="Subscribe example">
-      <div class="container">
-        <article>
-          <hgroup>
-            <h2>Stay Informed</h2>
-            <h3>Subscribe for aviation industry updates</h3>
-          </hgroup>
-          <form class="grid">
-            <input type="text" id="firstname" name="firstname" placeholder="Your name" aria-label="Name" required />
-            <input type="email" id="email" name="email" placeholder="Your email" aria-label="Email" required />
-            <button type="submit" onclick="event.preventDefault()">Subscribe</button>
-          </form>
-        </article>
-      </div>
+    <section class="contact">
+      <h2>Contact Us</h2>
+      <p>📧 contact@airtecservices.com</p>
+      <p>📞 (555) 123-4567</p>
     </section>
 
     <footer>
-      <small><a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a></small>
+      <a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a>
     </footer>
 
   </body>
