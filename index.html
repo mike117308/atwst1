@@ -1,12 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AIR-TEC Services</title>
-</head>
-<body>
-  <h1>Welcome to AIR-TEC Services</h1>
-  <p>We connect skilled aviation technicians with top employers.</p>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AIR-TEC Services</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+  </head>
+  <body>
+    <nav class="container-fluid">
+      <ul>
+        <li><strong>AIR-TEC</strong></li>
+      </ul>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#" role="button">Contact</a></li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <div class="grid">
+        <section>
+          <hgroup>
+            <h2>Aircraft Maintenance Staffing</h2>
+            <h3>Connecting Top Talent to the Skies</h3>
+          </hgroup>
+          <p>AIR-TEC specializes in placing highly trained aviation technicians in critical roles throughout the country.</p>
+          <figure>
+            <img src="https://source.unsplash.com/featured/?airplane" alt="Aircraft on tarmac" />
+            <figcaption><a href="https://unsplash.com" target="_blank">Image via Unsplash</a></figcaption>
+          </figure>
+          <h3>Why Choose AIR-TEC?</h3>
+          <p>We ensure our technicians meet the highest standards in aircraft maintenance, safety, and performance. Our partnerships with MROs and airlines provide exceptional opportunities for talent and reliability.</p>
+          <h3>Contact Us</h3>
+          <p>Email: contact@airtecservices.com<br>Phone: (555) 123-4567</p>
+        </section>
+      </div>
+    </main>
+
+    <section aria-label="Subscribe example">
+      <div class="container">
+        <article>
+          <hgroup>
+            <h2>Stay Updated</h2>
+            <h3>Sign up for job alerts and industry news</h3>
+          </hgroup>
+          <form class="grid">
+            <input type="text" id="firstname" name="firstname" placeholder="Your name" aria-label="Name" required />
+            <input type="email" id="email" name="email" placeholder="Your email" aria-label="Email" required />
+            <button type="submit" onclick="event.preventDefault()">Subscribe</button>
+          </form>
+        </article>
+      </div>
+    </section>
+
+    <footer class="container">
+      <small><a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a></small>
+    </footer>
+  </body>
 </html>
