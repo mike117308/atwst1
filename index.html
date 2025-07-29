@@ -8,54 +8,104 @@
     <style>
       :root {
         --primary: #d62828;
-        --secondary: #333333;
+        --dark: #1c1c1c;
+        --light: #f9fbfd;
+        --gray: #666666;
       }
 
       body {
-        background-color: #f9fbfd;
+        background-color: var(--light);
+        color: var(--dark);
+        font-family: 'Segoe UI', sans-serif;
       }
 
-      nav img.logo {
-        height: 40px;
-        margin-right: 0.5rem;
-        vertical-align: middle;
+      nav.container-fluid {
+        background-color: var(--primary);
+        color: white;
+        padding: 1rem;
+      }
+
+      nav.container-fluid a {
+        color: white;
+        font-weight: 500;
+        transition: opacity 0.2s;
+      }
+
+      nav.container-fluid a:hover {
+        opacity: 0.8;
+      }
+
+      img.logo {
+        height: 42px;
+        border-radius: 4px;
       }
 
       header.hero {
-        background: url('https://source.unsplash.com/1600x600/?aircraft,runway') center/cover no-repeat;
-        padding: 6rem 1rem;
+        background: linear-gradient(
+            rgba(0, 0, 0, 0.5), 
+            rgba(0, 0, 0, 0.5)
+          ),
+          url('https://source.unsplash.com/1600x600/?airplane,hanger')
+          center/cover no-repeat;
         color: white;
         text-align: center;
-        background-color: rgba(0, 0, 0, 0.5);
-        background-blend-mode: darken;
+        padding: 6rem 1rem 4rem;
+        box-shadow: inset 0 -4px 10px rgba(0, 0, 0, 0.3);
       }
 
       header.hero h1 {
         font-size: 3rem;
         margin-bottom: 0.5rem;
-        color: #ffffff;
+        color: #fff;
       }
 
       header.hero p {
-        font-size: 1.25rem;
-        opacity: 0.95;
-        color: #dddddd;
+        font-size: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto;
+        color: #f1f1f1;
+      }
+
+      main.container section {
+        padding: 2rem 0;
       }
 
       h2, h3 {
         color: var(--primary);
+        font-weight: 600;
       }
 
       ul li::marker {
         color: var(--primary);
       }
 
-      footer {
-        margin-top: 4rem;
+      .highlight-box {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-left: 5px solid var(--primary);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
       }
 
-      section:not(:last-child) {
-        margin-bottom: 4rem;
+      footer {
+        padding: 2rem 0;
+        background-color: #eee;
+        text-align: center;
+        font-size: 0.9rem;
+        color: var(--gray);
+      }
+
+      button[type="submit"] {
+        background-color: var(--primary);
+        color: white;
+        font-weight: bold;
+        border: none;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #b41f1f;
+        cursor: pointer;
       }
     </style>
   </head>
@@ -64,7 +114,7 @@
     <nav class="container-fluid">
       <ul>
         <li>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/AIR-TEC_logo_sample.jpg" alt="AIR-TEC logo" class="logo" />
+          <img src="https://files.catbox.moe/jr3hfw.jpg" alt="AIR-TEC logo" class="logo" />
         </li>
       </ul>
       <ul>
@@ -76,43 +126,42 @@
 
     <header class="hero">
       <h1>Aircraft Maintenance Staffing</h1>
-      <p>Connecting elite aviation technicians with world-class employers.</p>
+      <p>We connect top-tier aviation technicians with leading maintenance providers across the country.</p>
     </header>
 
     <main class="container">
-      <div class="grid">
-        <section>
+      <section>
+        <div class="highlight-box">
           <hgroup>
             <h2>Our Mission</h2>
             <h3>Precision. Safety. Reliability.</h3>
           </hgroup>
           <p>
-            AIR-TEC specializes in sourcing, vetting, and placing certified aviation maintenance professionals across the nation.
-            Our focus on quality and compliance ensures your aircraft—and your reputation—remain flight-ready.
+            AIR-TEC specializes in sourcing, vetting, and placing certified aviation maintenance professionals. Our commitment to operational excellence ensures that our clients and technicians work in perfect alignment.
           </p>
+        </div>
 
-          <h3>Why Choose AIR-TEC?</h3>
-          <ul>
-            <li>Nationwide network of certified A&P technicians</li>
-            <li>Deep partnerships with MROs and airlines</li>
-            <li>Commitment to FAA standards and beyond</li>
-          </ul>
+        <h3>Why Choose AIR-TEC?</h3>
+        <ul>
+          <li>Nationwide network of A&P certified technicians</li>
+          <li>Real-time availability and placement support</li>
+          <li>Deep expertise in MRO, FBO, and airline environments</li>
+        </ul>
 
-          <h3>Contact Us</h3>
-          <p>
-            📧 <a href="mailto:contact@airtecservices.com">contact@airtecservices.com</a><br>
-            ☎️ (555) 123-4567
-          </p>
-        </section>
-      </div>
+        <h3>Contact Us</h3>
+        <p>
+          📧 <a href="mailto:contact@airtecservices.com">contact@airtecservices.com</a><br>
+          ☎️ (555) 123-4567
+        </p>
+      </section>
     </main>
 
     <section aria-label="Subscribe example">
       <div class="container">
         <article>
           <hgroup>
-            <h2>Stay Updated</h2>
-            <h3>Get job alerts and industry insights</h3>
+            <h2>Stay Informed</h2>
+            <h3>Subscribe for aviation industry updates</h3>
           </hgroup>
           <form class="grid">
             <input type="text" id="firstname" name="firstname" placeholder="Your name" aria-label="Name" required />
@@ -123,7 +172,7 @@
       </div>
     </section>
 
-    <footer class="container">
+    <footer>
       <small><a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a></small>
     </footer>
 
