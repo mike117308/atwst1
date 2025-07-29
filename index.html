@@ -5,45 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AIR-TEC Services</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
       :root {
         --primary: #d62828;
-        --secondary: #333333;
+        --dark: #1a1a1a;
+        --light: #f4f4f4;
+        --glass: rgba(255, 255, 255, 0.8);
       }
 
       body {
-        background-color: #f9fbfd;
+        font-family: 'Roboto', sans-serif;
+        background-color: var(--light);
+        color: var(--dark);
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+
+      nav.container-fluid {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        padding: 1rem 2rem;
       }
 
       nav img.logo {
         height: 40px;
-        margin-right: 0.5rem;
+        margin-right: 1rem;
         vertical-align: middle;
       }
 
+      nav a {
+        color: var(--primary);
+        font-weight: 600;
+        transition: color 0.3s;
+      }
+
+      nav a:hover {
+        color: #a51f1f;
+      }
+
       header.hero {
-        background: url('https://source.unsplash.com/1600x600/?aircraft,runway') center/cover no-repeat;
-        padding: 6rem 1rem;
+        background: linear-gradient(rgba(214, 40, 40, 0.7), rgba(214, 40, 40, 0.7)),
+          url('https://source.unsplash.com/1600x800/?aircraft,hangar') center/cover no-repeat;
         color: white;
         text-align: center;
-        background-color: rgba(0, 0, 0, 0.5);
-        background-blend-mode: darken;
+        padding: 6rem 2rem 5rem;
+        position: relative;
       }
 
       header.hero h1 {
         font-size: 3rem;
         margin-bottom: 0.5rem;
-        color: #ffffff;
+        animation: fadeInDown 1s ease-out;
       }
 
       header.hero p {
-        font-size: 1.25rem;
+        font-size: 1.3rem;
         opacity: 0.95;
-        color: #dddddd;
+        max-width: 700px;
+        margin: 0 auto;
+        animation: fadeInUp 1.2s ease-out;
       }
 
-      h2, h3 {
+      .glass-box {
+        background: var(--glass);
+        padding: 2rem;
+        margin-top: -3rem;
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 1.2s ease-out;
+      }
+
+      .section-title {
         color: var(--primary);
+        font-weight: 700;
+      }
+
+      section {
+        padding: 4rem 1.5rem;
       }
 
       ul li::marker {
@@ -51,11 +93,30 @@
       }
 
       footer {
-        margin-top: 4rem;
+        background-color: #222;
+        color: #ccc;
+        padding: 2rem 1.5rem;
+        text-align: center;
       }
 
-      section:not(:last-child) {
-        margin-bottom: 4rem;
+      footer a {
+        color: #eee;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
       }
     </style>
   </head>
@@ -63,9 +124,7 @@
 
     <nav class="container-fluid">
       <ul>
-        <li>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/AIR-TEC_logo_sample.jpg" alt="AIR-TEC logo" class="logo" />
-        </li>
+        <li><img src="https://files.catbox.moe/d4tmw3.jpg" alt="AIR-TEC logo" class="logo" /></li>
       </ul>
       <ul>
         <li><a href="#">Home</a></li>
@@ -75,55 +134,40 @@
     </nav>
 
     <header class="hero">
-      <h1>Aircraft Maintenance Staffing</h1>
-      <p>Connecting elite aviation technicians with world-class employers.</p>
+      <h1>AIRCRAFT MAINTENANCE STAFFING</h1>
+      <p>Connecting elite aviation technicians with world-class employers</p>
     </header>
 
     <main class="container">
-      <div class="grid">
-        <section>
-          <hgroup>
-            <h2>Our Mission</h2>
-            <h3>Precision. Safety. Reliability.</h3>
-          </hgroup>
+      <section>
+        <div class="glass-box">
+          <h2 class="section-title">Our Mission</h2>
           <p>
             AIR-TEC specializes in sourcing, vetting, and placing certified aviation maintenance professionals across the nation.
-            Our focus on quality and compliance ensures your aircraft—and your reputation—remain flight-ready.
+            Our commitment to operational excellence ensures our clients and technicians work in perfect alignment with the highest safety and quality standards.
           </p>
+        </div>
+      </section>
 
-          <h3>Why Choose AIR-TEC?</h3>
-          <ul>
-            <li>Nationwide network of certified A&P technicians</li>
-            <li>Deep partnerships with MROs and airlines</li>
-            <li>Commitment to FAA standards and beyond</li>
-          </ul>
+      <section>
+        <h2 class="section-title">Why Choose AIR-TEC?</h2>
+        <ul>
+          <li>Nationwide network of A&P certified technicians</li>
+          <li>Real-time availability and placement support</li>
+          <li>Deep expertise in MRO, FBO, and airline environments</li>
+        </ul>
+      </section>
 
-          <h3>Contact Us</h3>
-          <p>
-            📧 <a href="mailto:contact@airtecservices.com">contact@airtecservices.com</a><br>
-            ☎️ (555) 123-4567
-          </p>
-        </section>
-      </div>
+      <section>
+        <h2 class="section-title">Contact Us</h2>
+        <p>
+          📧 <a href="mailto:contact@airtecservices.com">contact@airtecservices.com</a><br />
+          ☎️ (555) 123-4567
+        </p>
+      </section>
     </main>
 
-    <section aria-label="Subscribe example">
-      <div class="container">
-        <article>
-          <hgroup>
-            <h2>Stay Updated</h2>
-            <h3>Get job alerts and industry insights</h3>
-          </hgroup>
-          <form class="grid">
-            <input type="text" id="firstname" name="firstname" placeholder="Your name" aria-label="Name" required />
-            <input type="email" id="email" name="email" placeholder="Your email" aria-label="Email" required />
-            <button type="submit" onclick="event.preventDefault()">Subscribe</button>
-          </form>
-        </article>
-      </div>
-    </section>
-
-    <footer class="container">
+    <footer>
       <small><a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a></small>
     </footer>
 
