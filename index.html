@@ -7,8 +7,6 @@
 
   <!-- Pico CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
-
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
@@ -26,12 +24,10 @@
       padding: 0;
     }
 
-    /* Force black text site-wide */
     main, nav, section, p, li, a, h1, h2, h3, h4, h5, h6 {
       color: var(--dark) !important;
     }
 
-    /* Sticky nav */
     nav.container-fluid {
       position: sticky;
       top: 0;
@@ -56,7 +52,6 @@
       color: var(--primary) !important;
     }
 
-    /* Hero section */
     header.hero {
       background: linear-gradient(rgba(214, 40, 40, 0.8), rgba(214, 40, 40, 0.8)),
         url('https://plus.unsplash.com/premium_photo-1661515819226-24c45a72cf03?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat;
@@ -77,12 +72,11 @@
     }
 
     main.container {
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 3rem auto;
       padding: 0 1rem;
     }
 
-    /* Add section card style */
     section {
       background: #fff;
       border-radius: 8px;
@@ -96,7 +90,6 @@
       transform: translateY(-2px);
     }
 
-    /* Header underline effect */
     section h2 {
       position: relative;
       margin-bottom: 1.5rem;
@@ -112,7 +105,18 @@
       border-radius: 2px;
     }
 
-    /* Footer */
+    /* Two-column layout for larger screens */
+    .two-column {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .two-column > section {
+      flex: 1 1 48%;
+      margin-bottom: 0;
+    }
+
     footer {
       background-color: #222;
       text-align: center;
@@ -121,12 +125,20 @@
       margin-top: 3rem;
     }
 
-    footer,
-    footer p {
+    footer, footer p {
       color: #eeeeee !important;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
+      .two-column {
+        flex-direction: column;
+      }
+
+      .two-column > section {
+        flex: 1 1 100%;
+        margin-bottom: 2rem;
+      }
+
       header.hero h1 {
         font-size: 2rem;
       }
@@ -176,22 +188,27 @@
       <p>📞 (555) 123-4567</p>
     </section>
 
-    <section>
-      <h2>Our Services</h2>
-      <p>
-        We offer a variety of services tailored to meet the needs of our clients including 
-        maintenance staffing, contract services, and emergency response teams. Discover how 
-        AIR-TEC can support your operations today!
-      </p>
-    </section>
+    <div class="two-column">
+      <section>
+        <h2>Our Services</h2>
+        <p>
+          We offer a variety of services tailored to meet the needs of our clients including 
+          maintenance staffing, contract services, and emergency response teams. Discover how 
+          AIR-TEC can support your operations today!
+        </p>
+      </section>
 
-    <section>
-      <h2>Testimonials</h2>
-      <p>
-        "AIR-TEC consistently provides top-tier technicians that enhance our operations."
-        - Satisfied Client
-      </p>
-    </section>
+      <section>
+        <h2>Testimonials</h2>
+        <p>
+          "AIR-TEC consistently provides top-tier technicians that enhance our operations."
+          - Satisfied Client
+        </p>
+        <p>
+          "Reliable, professional, and fast — exactly what we needed." - Airline Partner
+        </p>
+      </section>
+    </div>
   </main>
 
   <footer>
