@@ -1,162 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AIR-TEC Services</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-    <style>
-      :root {
-        --primary: #d62828;
-        --dark: #121212;
-        --light: #ffffff;
-        --gray: #666666;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AIR-TEC Services</title>
 
-      body {
-        font-family: 'Roboto', sans-serif;
-        background-color: var(--light);
-        color: var(--dark);
-        margin: 0;
-      }
+  <!-- Pico CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
 
-      nav.container-fluid {
-        background: #ffffff;
-        padding: 1rem 2rem;
-        border-bottom: 1px solid #eaeaea;
-      }
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
 
-      nav img.logo {
-        height: 40px;
-        vertical-align: middle;
-      }
+  <style>
+    :root {
+      --primary: #d62828;
+      --dark: #000000;
+      --light: #ffffff;
+      --gray: #999999;
+    }
 
-      nav a {
-        color: var(--dark);
-        font-weight: 500;
-      }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--light);
+      margin: 0;
+      padding: 0;
+    }
 
-      nav a:hover {
-        color: var(--primary);
-      }
+    /* Force black text site-wide */
+    main, nav, section, p, li, a, h1, h2, h3, h4, h5, h6 {
+      color: var(--dark) !important;
+    }
 
-      header.hero {
-        background: linear-gradient(rgba(214, 40, 40, 0.75), rgba(214, 40, 40, 0.75)),
-          url('https://source.unsplash.com/1600x700/?airplane,hangar') center/cover no-repeat;
-        color: white;
-        text-align: center;
-        padding: 6rem 2rem 3rem;
-      }
+    /* Sticky nav */
+    nav.container-fluid {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--light);
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--gray);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
 
+    nav img.logo {
+      height: 40px;
+      vertical-align: middle;
+    }
+
+    nav a {
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--primary) !important;
+    }
+
+    /* Hero section */
+    header.hero {
+      background: linear-gradient(rgba(214, 40, 40, 0.8), rgba(214, 40, 40, 0.8)),
+        url('https://plus.unsplash.com/premium_photo-1661515819226-24c45a72cf03?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+    }
+
+    header.hero,
+    header.hero h1,
+    header.hero p {
+      color: white !important;
+    }
+
+    header.hero h1 {
+      font-weight: 700;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    main.container {
+      max-width: 1000px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+    }
+
+    /* Add section card style */
+    section {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: transform 0.2s ease;
+    }
+
+    section:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Header underline effect */
+    section h2 {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    section h2::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 4px;
+      background-color: var(--primary);
+      margin-top: 8px;
+      border-radius: 2px;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #222;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      margin-top: 3rem;
+    }
+
+    footer,
+    footer p {
+      color: #eeeeee !important;
+    }
+
+    @media (max-width: 600px) {
       header.hero h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
+        font-size: 2rem;
       }
+    }
+  </style>
+</head>
 
-      header.hero p {
-        font-size: 1.2rem;
-        max-width: 700px;
-        margin: 0 auto;
-      }
+<body>
+  <nav class="container-fluid">
+    <ul>
+      <li><img src="https://files.catbox.moe/d4tmw3.jpg" alt="AIR-TEC logo" class="logo" /></li>
+    </ul>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Careers</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
 
-      .glass-box {
-        background: rgba(255, 255, 255, 0.95);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        padding: 2rem;
-        border-radius: 10px;
-        max-width: 800px;
-        margin: -4rem auto 3rem auto;
-      }
+  <header class="hero">
+    <h1>AIRCRAFT MAINTENANCE STAFFING</h1>
+    <p>Connecting elite aviation technicians with world-class employers.</p>
+  </header>
 
-      .glass-box h2 {
-        color: var(--primary);
-        font-size: 1.5rem;
-      }
-
-      section {
-        max-width: 800px;
-        margin: 0 auto 3rem auto;
-        padding: 0 1.5rem;
-      }
-
-      section h2 {
-        color: var(--primary);
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-      }
-
-      ul {
-        padding-left: 1.2rem;
-      }
-
-      ul li {
-        margin-bottom: 0.5rem;
-      }
-
-      ul li::marker {
-        color: var(--primary);
-      }
-
-      .contact p {
-        font-size: 1.1rem;
-        margin-bottom: 0.4rem;
-      }
-
-      footer {
-        background-color: #222;
-        color: #ccc;
-        text-align: center;
-        padding: 2rem 1rem;
-        font-size: 0.9rem;
-      }
-
-      footer a {
-        color: #eee;
-        margin: 0 0.5rem;
-      }
-
-      @media (max-width: 600px) {
-        header.hero h1 {
-          font-size: 2rem;
-        }
-
-        .glass-box, section {
-          margin-left: 1rem;
-          margin-right: 1rem;
-        }
-      }
-    </style>
-  </head>
-  <body>
-
-    <nav class="container-fluid">
-      <ul>
-        <li>
-          <img src="https://files.catbox.moe/d4tmw3.jpg" alt="AIR-TEC logo" class="logo" />
-        </li>
-      </ul>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Careers</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </nav>
-
-    <header class="hero">
-      <h1>AIRCRAFT MAINTENANCE STAFFING</h1>
-      <p>Connecting elite aviation technicians with world-class employers.</p>
-    </header>
-
-    <div class="glass-box">
+  <main class="container">
+    <section>
       <h2>Our Mission</h2>
       <p>
         AIR-TEC specializes in sourcing, vetting and placing certified aviation maintenance professionals across
         the nation. Our commitment to operational excellence ensures our clients and technicians work in perfect
         alignment with the highest safety and quality standards.
       </p>
-    </div>
+    </section>
 
     <section>
       <h2>Why Choose AIR-TEC?</h2>
@@ -173,9 +176,26 @@
       <p>📞 (555) 123-4567</p>
     </section>
 
-    <footer>
-      <a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a>
-    </footer>
+    <section>
+      <h2>Our Services</h2>
+      <p>
+        We offer a variety of services tailored to meet the needs of our clients including 
+        maintenance staffing, contract services, and emergency response teams. Discover how 
+        AIR-TEC can support your operations today!
+      </p>
+    </section>
 
-  </body>
+    <section>
+      <h2>Testimonials</h2>
+      <p>
+        "AIR-TEC consistently provides top-tier technicians that enhance our operations."
+        - Satisfied Client
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 AIR-TEC Services. All Rights Reserved.</p>
+  </footer>
+</body>
 </html>
