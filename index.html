@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Plane Contrail to Logo</title>
+<title>Jet Contrail to Logo</title>
 <style>
   body { margin: 0; overflow: hidden; background: #2d608e; }
 </style>
@@ -11,6 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/three@0.150.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.150.0/examples/js/loaders/FontLoader.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.150.0/examples/js/geometries/TextGeometry.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.150.0/examples/js/loaders/GLTFLoader.js"></script>
 
 <script>
 let scene = new THREE.Scene();
@@ -19,11 +20,24 @@ let renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// Plane (placeholder)
-let planeGeometry = new THREE.BoxGeometry(1, 0.3, 0.3);
-let planeMaterial = new THREE.MeshBasicMaterial({color: 0xffffff});
-let plane = new THREE.Mesh(planeGeometry, planeMaterial);
-scene.add(plane);
+// Lighting
+let light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(5, 5, 5);
+scene.add(light);
+scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+
+// Plane model placeholder until load
+let plane;
+let gltfLoader = new THREE.GLTFLoader();
+gltfLoader.load('https://rawcdn.githack.com/KhronosGroup/glTF-Sample-Models/9c2cbd3c/2.0/CesiumAir/glTF/CesiumAir.gltf',
+    function(gltf) {
+        plane = gltf.scene;
+        plane.scale.set(0.5, 0.5, 0.5);
+        plane.rotation.y = Math.PI; // Face right
+        scene.add(plane);
+        plane.position.x = -8;
+    }
+);
 
 // Particles
 let particles = [];
@@ -46,14 +60,10 @@ fontLoader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.
         height: 0.05
     });
     textGeo.center();
-
-    // Sample points from text geometry
     let tempGeo = new THREE.Geometry().fromBufferGeometry(textGeo);
     textPoints = tempGeo.vertices.map(v => v.clone());
 });
 
-// Start positions
-plane.position.x = -8;
 camera.position.z = 6;
 
 let clock = new THREE.Clock();
@@ -63,13 +73,27 @@ function animate() {
     requestAnimationFrame(animate);
     let delta = clock.getDelta();
 
-    // Move plane
-    if (!morphStarted) {
-        plane.position.x += delta * 2;
-        addParticle(plane.position.x - 0.6, plane.position.y, plane.position.z);
+    if (plane) {
+        // Move plane
+        if (!morphStarted) {
+            plane.position.x += delta * 2;
+            let tailPos = new THREE.Vector3();
+            plane.getWorldPosition(tailPos);
+            addParticle(tailPos.x - 0.6, tailPos.y, tailPos.z);
+        }
+
+        // Trigger morph
+        if (!morphStarted && plane.position.x >= 0 && textPoints.length > 0) {
+            morphStarted = true;
+            for (let i = 0; i < particles.length; i++) {
+                let target = textPoints[i % textPoints.length].clone();
+                particles[i].target = target;
+                particles[i].morphing = true;
+            }
+        }
     }
 
-    // Fade & update particles
+    // Update particles
     for (let i = particles.length - 1; i >= 0; i--) {
         if (!particles[i].morphing) {
             particles[i].life -= delta * 0.5;
@@ -77,17 +101,6 @@ function animate() {
         if (particles[i].life <= 0 && !particles[i].morphing) {
             scene.remove(particles[i].mesh);
             particles.splice(i, 1);
-        }
-    }
-
-    // Trigger morph
-    if (!morphStarted && plane.position.x >= 0 && textPoints.length > 0) {
-        morphStarted = true;
-        // Assign each particle a target text point
-        for (let i = 0; i < particles.length; i++) {
-            let target = textPoints[i % textPoints.length].clone();
-            particles[i].target = target;
-            particles[i].morphing = true;
         }
     }
 
@@ -104,7 +117,6 @@ function animate() {
 }
 animate();
 
-// Handle resize
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
