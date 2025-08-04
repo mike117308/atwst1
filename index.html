@@ -4,54 +4,63 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Air-Tec Plane Animation</title>
-<link rel="stylesheet" href="style.css">
+<style>
+  body {
+    background-color: #1a1a1a; /* Dark background for contrast */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Fill screen height */
+    margin: 0;
+  }
+
+  .logo-container {
+    position: relative;
+    width: 800px; /* Match logo's original pixel width */
+    height: auto;
+  }
+
+  .logo-base {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .logo-plane {
+    position: absolute;
+    top: 0;
+    left: -100%; /* Start completely off-screen */
+    width: 100%;
+    height: auto;
+    animation: fly-in 5s ease-in-out forwards;
+  }
+
+  @keyframes fly-in {
+    0% {
+      left: -100%;
+      opacity: 0;
+      transform: scale(1) rotate(0deg);
+    }
+    30% {
+      opacity: 1;
+    }
+    100% {
+      left: 0;
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+  }
+</style>
 </head>
 <body>
 
-<div class="animation-container">
-    <img src="logo.png" alt="Air-Tec Logo" class="logo">
-    <img src="plane.png" alt="Plane" class="plane">
+<div class="logo-container">
+  <!-- Logo without the plane -->
+  <img src="air-tec-transparent-no-plane.png" alt="AIR-TEC logo" class="logo-base">
+
+  <!-- Plane-only image -->
+  <img src="air-tec-logo-transparent-plane-only.png" alt="Plane" class="logo-plane">
 </div>
 
 </body>
 </html>
-body {
-    background-color: #1a1a1a; /* Change or remove for transparent background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Full viewport for testing */
-    margin: 0;
-}
-
-.animation-container {
-    position: relative;
-    width: 800px;  /* Test size — change to 100vw for full-screen later */
-    height: auto;
-}
-
-.logo {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.plane {
-    position: absolute;
-    top: 50%;
-    left: -300px; /* Start off-screen left */
-    transform: translateY(-50%);
-    width: 150px; /* Scale plane size */
-    animation: fly-in 6s ease-in-out forwards;
-}
-
-@keyframes fly-in {
-    0% {
-        left: -300px;
-        transform: translateY(-50%);
-    }
-    100% {
-        left: 52.75%; /* Pixel-perfect from reference */
-        transform: translate(-50%, -50%);
-    }
-}
