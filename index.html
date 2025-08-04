@@ -2,126 +2,72 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Jet Contrail to Logo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plane Animation Test</title>
 <style>
-  body { margin: 0; overflow: hidden; background: #2d608e; }
+  body {
+    background: #f2f2f2; /* light gray background for testing */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .contact-animation {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 200px;
+    background: transparent;
+    overflow: hidden;
+    border: 1px solid #ccc; /* test outline */
+  }
+
+  .plane {
+    position: absolute;
+    top: 50%;
+    left: -200px;
+    transform: translateY(-50%);
+    height: 80px;
+    animation: flyAcross 6s ease-in-out forwards;
+  }
+
+  .logo-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    font-weight: bold;
+    color: #c62828;
+    opacity: 0;
+    animation: fadeIn 3s ease forwards;
+    animation-delay: 3s;
+  }
+
+  @keyframes flyAcross {
+    0% {
+      left: -200px;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
 </style>
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/three@0.150.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.150.0/examples/js/loaders/FontLoader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.150.0/examples/js/geometries/TextGeometry.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.150.0/examples/js/loaders/GLTFLoader.js"></script>
 
-<script>
-let scene = new THREE.Scene();
-let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-let renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+<div class="contact-animation">
+  <img src="plane.png" class="plane" alt="Air-Tec Plane">
+  <div class="logo-text">AIR‑TEC</div>
+</div>
 
-// Lighting
-let light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(5, 5, 5);
-scene.add(light);
-scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-
-// Plane model placeholder until load
-let plane;
-let gltfLoader = new THREE.GLTFLoader();
-gltfLoader.load('https://rawcdn.githack.com/KhronosGroup/glTF-Sample-Models/9c2cbd3c/2.0/CesiumAir/glTF/CesiumAir.gltf',
-    function(gltf) {
-        plane = gltf.scene;
-        plane.scale.set(0.5, 0.5, 0.5);
-        plane.rotation.y = Math.PI; // Face right
-        scene.add(plane);
-        plane.position.x = -8;
-    }
-);
-
-// Particles
-let particles = [];
-let particleMaterial = new THREE.MeshBasicMaterial({color: 0xffffff});
-function addParticle(x, y, z) {
-    let geo = new THREE.SphereGeometry(0.05, 6, 6);
-    let p = new THREE.Mesh(geo, particleMaterial.clone());
-    p.position.set(x, y, z);
-    scene.add(p);
-    particles.push({mesh: p, life: 1, morphing: false});
-}
-
-// Text target points
-let textPoints = [];
-let fontLoader = new THREE.FontLoader();
-fontLoader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function(font) {
-    let textGeo = new THREE.TextGeometry('AIR-TEC', {
-        font: font,
-        size: 1,
-        height: 0.05
-    });
-    textGeo.center();
-    let tempGeo = new THREE.Geometry().fromBufferGeometry(textGeo);
-    textPoints = tempGeo.vertices.map(v => v.clone());
-});
-
-camera.position.z = 6;
-
-let clock = new THREE.Clock();
-let morphStarted = false;
-
-function animate() {
-    requestAnimationFrame(animate);
-    let delta = clock.getDelta();
-
-    if (plane) {
-        // Move plane
-        if (!morphStarted) {
-            plane.position.x += delta * 2;
-            let tailPos = new THREE.Vector3();
-            plane.getWorldPosition(tailPos);
-            addParticle(tailPos.x - 0.6, tailPos.y, tailPos.z);
-        }
-
-        // Trigger morph
-        if (!morphStarted && plane.position.x >= 0 && textPoints.length > 0) {
-            morphStarted = true;
-            for (let i = 0; i < particles.length; i++) {
-                let target = textPoints[i % textPoints.length].clone();
-                particles[i].target = target;
-                particles[i].morphing = true;
-            }
-        }
-    }
-
-    // Update particles
-    for (let i = particles.length - 1; i >= 0; i--) {
-        if (!particles[i].morphing) {
-            particles[i].life -= delta * 0.5;
-        }
-        if (particles[i].life <= 0 && !particles[i].morphing) {
-            scene.remove(particles[i].mesh);
-            particles.splice(i, 1);
-        }
-    }
-
-    // Morph particles into text
-    if (morphStarted) {
-        for (let p of particles) {
-            if (p.morphing && p.target) {
-                p.mesh.position.lerp(p.target, delta * 2);
-            }
-        }
-    }
-
-    renderer.render(scene, camera);
-}
-animate();
-
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
-</script>
 </body>
 </html>
