@@ -1,66 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Air-Tec Plane Animation</title>
-<style>
-  body {
-    background-color: #1a1a1a; /* Dark background for contrast */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Fill screen height */
-    margin: 0;
-  }
-
-  .logo-container {
-    position: relative;
-    width: 800px; /* Match logo's original pixel width */
-    height: auto;
-  }
-
-  .logo-base {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-
-  .logo-plane {
-    position: absolute;
-    top: 0;
-    left: -100%; /* Start completely off-screen */
-    width: 100%;
-    height: auto;
-    animation: fly-in 5s ease-in-out forwards;
-  }
-
-  @keyframes fly-in {
-    0% {
-      left: -100%;
-      opacity: 0;
-      transform: scale(1) rotate(0deg);
+  <meta charset="UTF-8" />
+  <title>Air Tec Animation</title>
+  <style>
+    /* Base styles */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      overflow: hidden;
+      font-family: sans-serif;
+      height: 100vh;
+      position: relative;
     }
-    30% {
-      opacity: 1;
+
+    /* Logo positioning: centred horizontally, fixed percentage from the bottom */
+    #logo {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50vw;
+      max-width: 600px;
+      min-width: 280px;
+      height: auto;
+      z-index: 1;
     }
-    100% {
+
+    /* Container for plane and its trail */
+    #plane-container {
+      position: absolute;
       left: 0;
-      opacity: 1;
-      transform: scale(1) rotate(0deg);
+      top: 0;
+      z-index: 10;
+      pointer-events: none;
     }
-  }
-</style>
+
+    /* Plane image: responsive sizing */
+    #plane {
+      display: block;
+      width: 15vw;
+      max-width: 300px;
+      min-width: 150px;
+      height: auto;
+    }
+
+    /* Jet trail behind the plane */
+    .trail {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      height: 4px;
+      background: linear-gradient(to right, rgba(255, 0, 0, 0.8), rgba(255, 0, 0, 0));
+      width: 0;
+      z-index: 5;
+      border-radius: 2px;
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
-
-<div class="logo-container">
+  <!-- Plane container with plane image and its jet trail -->
+  <div id="plane-container">
+    <img id="plane" src="plane1.png" alt="Plane" />
+    <div id="trail" class="trail"></div>
+  </div>
   <!-- Logo without the plane -->
-  <img src="air-tec-transparent-no-plane.png" alt="AIR-TEC logo" class="logo-base">
+  <img id="logo" src="noplanelogo.png" alt="Air Tec logo" />
 
-  <!-- Plane-only image -->
-  <img src="air-tec-logo-transparent-plane-only.png" alt="Plane" class="logo-plane">
-</div>
+  <script>
+    window.addEventListener('load', function () {
+      const planeContainer = document.getElementById('plane-container');
+      const plane = document.getElementById('plane');
+      const trail = document.getElementById('trail');
+      const logo = document.getElementById('logo');
 
+      // Once both images are loaded, calculate positions
+      function startAnimation() {
+        const logoRect = logo.getBoundingClientRect();
+        const planeRect = plane.getBoundingClientRect();
+
+        // Starting point: off-screen left, above the logo
+        const startLeft = -planeRect.width;
+        const startTop = logoRect.top - planeRect.height - 20;
+
+        // Final point: centered above the logo
+        const finalLeft = logoRect.left + (logoRect.width - planeRect.width) / 2;
+        const finalTop = logoRect.top - planeRect.height * 0.4;
+
+        // Set initial positions
+        planeContainer.style.left = startLeft + 'px';
+        planeContainer.style.top = startTop + 'px';
+
+        // Trail position
+        trail.style.top = planeRect.height / 2 + 'px';
+        trail.style.left = planeRect.width + 'px';
+        trail.style.width = '0px';
+
+        // Start animation
+        requestAnimationFrame(() => {
+          planeContainer.style.transition = 'left 4s ease-in-out, top 4s ease-in-out';
+          planeContainer.style.left = finalLeft + 'px';
+          planeContainer.style.top = finalTop + 'px';
+
+          // Trail width spans from start to plane's midpoint at landing
+          const finalTrailWidth = finalLeft - startLeft + planeRect.width * 0.5;
+          trail.style.transition = 'width 4s ease-in-out';
+          trail.style.width = finalTrailWidth + 'px';
+        });
+
+        // Fade out the trail when the plane lands
+        function onTransitionEnd(e) {
+          if (e.propertyName === 'left') {
+            trail.style.transition = 'width 1.5s ease-in-out, opacity 1.5s ease-in-out';
+            trail.style.opacity = '0';
+            trail.style.width = '10px';
+            planeContainer.removeEventListener('transitionend', onTransitionEnd);
+          }
+        }
+        planeContainer.addEventListener('transitionend', onTransitionEnd);
+      }
+
+      // Ensure both images are loaded before starting the animation
+      if (logo.complete && plane.complete) {
+        startAnimation();
+      } else {
+        let loadedCount = 0;
+        const checkLoaded = () => {
+          loadedCount += 1;
+          if (loadedCount === 2) startAnimation();
+        };
+        logo.addEventListener('load', checkLoaded);
+        plane.addEventListener('load', checkLoaded);
+      }
+    });
+  </script>
 </body>
 </html>
