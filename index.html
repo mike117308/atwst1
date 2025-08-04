@@ -13,9 +13,9 @@
     font-size: 5em;
     font-weight: bold;
     color: white;
-    opacity: 0;
-    transition: opacity 2s ease;
+    opacity: 1; /* Always visible now */
     pointer-events: none;
+    z-index: 10;
   }
 </style>
 </head>
@@ -40,7 +40,7 @@ let particles = [];
 let particleMaterial = new THREE.MeshBasicMaterial({color: 0xffffff});
 function addParticle(x, y, z) {
     let geo = new THREE.SphereGeometry(0.05, 8, 8);
-    let p = new THREE.Mesh(geo, particleMaterial);
+    let p = new THREE.Mesh(geo, particleMaterial.clone());
     p.position.set(x, y, z);
     scene.add(p);
     particles.push({mesh: p, life: 1});
@@ -48,13 +48,16 @@ function addParticle(x, y, z) {
 
 camera.position.z = 5;
 
+// Start plane off-screen left
+plane.position.x = -8;
+
 let clock = new THREE.Clock();
 function animate() {
     requestAnimationFrame(animate);
     let delta = clock.getDelta();
 
     // Move plane forward
-    plane.position.x += delta * 2;
+    plane.position.x += delta * 2; // Adjust speed here
 
     // Drop particles at plane's tail
     addParticle(plane.position.x - 0.6, plane.position.y, plane.position.z);
@@ -70,14 +73,22 @@ function animate() {
         }
     }
 
-    // When plane goes off screen, fade in text
-    if (plane.position.x > 5) {
-        document.getElementById("overlay").style.opacity = 1;
+    // Reset when plane goes off-screen right
+    if (plane.position.x > 8) {
+        plane.position.x = -8; // Loop back
+        particles = [];
     }
 
     renderer.render(scene, camera);
 }
 animate();
+
+// Handle window resize
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
 </script>
 </body>
 </html>
