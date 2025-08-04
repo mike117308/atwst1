@@ -3,59 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plane Landing Animation</title>
-<style>
-  body {
-    background: #f2f2f2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-  }
-
-  .contact-animation {
-    position: relative;
-    width: 800px;
-    height: 200px;
-    background: transparent;
-    overflow: hidden;
-  }
-
-  /* Logo behind */
-  .logo {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  /* Plane animation */
-  .plane {
-    position: absolute;
-    top: 50%;
-    left: -200px; /* start off-screen */
-    transform: translateY(-50%);
-    height: 80px;
-    animation: flyAndStop 4s ease-out forwards;
-  }
-
-  @keyframes flyAndStop {
-    0% {
-      left: -200px;
-    }
-    100% {
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  }
-</style>
+<title>Air-Tec Plane Animation</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="contact-animation">
-  <img src="logo.png" class="logo" alt="Air-Tec Logo">
-  <img src="plane.png" class="plane" alt="Plane">
+<div class="animation-container">
+    <img src="logo.png" alt="Air-Tec Logo" class="logo">
+    <img src="plane.png" alt="Plane" class="plane">
 </div>
 
 </body>
 </html>
+body {
+    background-color: #1a1a1a; /* Change or remove for transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport for testing */
+    margin: 0;
+}
+
+.animation-container {
+    position: relative;
+    width: 800px;  /* Test size — change to 100vw for full-screen later */
+    height: auto;
+}
+
+.logo {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.plane {
+    position: absolute;
+    top: 50%;
+    left: -300px; /* Start off-screen left */
+    transform: translateY(-50%);
+    width: 150px; /* Scale plane size */
+    animation: fly-in 6s ease-in-out forwards;
+}
+
+@keyframes fly-in {
+    0% {
+        left: -300px;
+        transform: translateY(-50%);
+    }
+    100% {
+        left: 52.75%; /* Pixel-perfect from reference */
+        transform: translate(-50%, -50%);
+    }
+}
