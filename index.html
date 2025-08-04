@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Air Tec Animation</title>
   <style>
-    /* Base styles */
     body {
       margin: 0;
       padding: 0;
@@ -15,7 +14,6 @@
       position: relative;
     }
 
-    /* Logo positioning: centred horizontally, fixed percentage from the bottom */
     #logo {
       position: absolute;
       bottom: 10%;
@@ -28,7 +26,6 @@
       z-index: 1;
     }
 
-    /* Container for plane and its trail */
     #plane-container {
       position: absolute;
       left: 0;
@@ -37,7 +34,6 @@
       pointer-events: none;
     }
 
-    /* Plane image: responsive sizing */
     #plane {
       display: block;
       width: 15vw;
@@ -46,7 +42,6 @@
       height: auto;
     }
 
-    /* Jet trail behind the plane */
     .trail {
       position: absolute;
       top: 50%;
@@ -62,12 +57,10 @@
   </style>
 </head>
 <body>
-  <!-- Plane container with plane image and its jet trail -->
   <div id="plane-container">
     <img id="plane" src="plane1.png" alt="Plane" />
     <div id="trail" class="trail"></div>
   </div>
-  <!-- Logo without the plane -->
   <img id="logo" src="noplanelogo.png" alt="Air Tec logo" />
 
   <script>
@@ -77,41 +70,35 @@
       const trail = document.getElementById('trail');
       const logo = document.getElementById('logo');
 
-      // Once both images are loaded, calculate positions
       function startAnimation() {
         const logoRect = logo.getBoundingClientRect();
         const planeRect = plane.getBoundingClientRect();
 
-        // Starting point: off-screen left, above the logo
+        // Start position: off-screen left, same vertical alignment as target
         const startLeft = -planeRect.width;
-        const startTop = logoRect.top - planeRect.height - 20;
+        const startTop = logoRect.top + (logoRect.height - planeRect.height) / 2;
 
-        // Final point: centered above the logo
+        // End position: centered horizontally & vertically over the logo
         const finalLeft = logoRect.left + (logoRect.width - planeRect.width) / 2;
-        const finalTop = logoRect.top - planeRect.height * 0.4;
+        const finalTop = logoRect.top + (logoRect.height - planeRect.height) / 2;
 
-        // Set initial positions
         planeContainer.style.left = startLeft + 'px';
         planeContainer.style.top = startTop + 'px';
 
-        // Trail position
         trail.style.top = planeRect.height / 2 + 'px';
         trail.style.left = planeRect.width + 'px';
         trail.style.width = '0px';
 
-        // Start animation
         requestAnimationFrame(() => {
           planeContainer.style.transition = 'left 4s ease-in-out, top 4s ease-in-out';
           planeContainer.style.left = finalLeft + 'px';
           planeContainer.style.top = finalTop + 'px';
 
-          // Trail width spans from start to plane's midpoint at landing
           const finalTrailWidth = finalLeft - startLeft + planeRect.width * 0.5;
           trail.style.transition = 'width 4s ease-in-out';
           trail.style.width = finalTrailWidth + 'px';
         });
 
-        // Fade out the trail when the plane lands
         function onTransitionEnd(e) {
           if (e.propertyName === 'left') {
             trail.style.transition = 'width 1.5s ease-in-out, opacity 1.5s ease-in-out';
@@ -123,7 +110,6 @@
         planeContainer.addEventListener('transitionend', onTransitionEnd);
       }
 
-      // Ensure both images are loaded before starting the animation
       if (logo.complete && plane.complete) {
         startAnimation();
       } else {
