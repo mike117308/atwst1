@@ -1,175 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AIR-TEC Services</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-      :root {
-        --primary: #d62828;
-        --dark: #1a1a1a;
-        --light: #f4f4f4;
-        --glass: rgba(255, 255, 255, 0.8);
-      }
+<head>
+<meta charset="UTF-8">
+<title>Plane Contrail Demo</title>
+<style>
+  body { margin: 0; overflow: hidden; background: #2d608e; }
+  #overlay {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: Arial, sans-serif;
+    font-size: 5em;
+    font-weight: bold;
+    color: white;
+    opacity: 0;
+    transition: opacity 2s ease;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div id="overlay">AIR‑TEC</div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.150.0/build/three.min.js"></script>
+<script>
+let scene = new THREE.Scene();
+let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+let renderer = new THREE.WebGLRenderer({antialias: true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-      body {
-        font-family: 'Roboto', sans-serif;
-        background-color: var(--light);
-        color: var(--dark);
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-      }
+// Placeholder "plane"
+let planeGeometry = new THREE.BoxGeometry(1, 0.3, 0.3);
+let planeMaterial = new THREE.MeshBasicMaterial({color: 0xffffff});
+let plane = new THREE.Mesh(planeGeometry, planeMaterial);
+scene.add(plane);
 
-      nav.container-fluid {
-        background: white;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-        padding: 1rem 2rem;
-      }
+// Contrail particles
+let particles = [];
+let particleMaterial = new THREE.MeshBasicMaterial({color: 0xffffff});
+function addParticle(x, y, z) {
+    let geo = new THREE.SphereGeometry(0.05, 8, 8);
+    let p = new THREE.Mesh(geo, particleMaterial);
+    p.position.set(x, y, z);
+    scene.add(p);
+    particles.push({mesh: p, life: 1});
+}
 
-      nav img.logo {
-        height: 40px;
-        margin-right: 1rem;
-        vertical-align: middle;
-      }
+camera.position.z = 5;
 
-      nav a {
-        color: var(--primary);
-        font-weight: 600;
-        transition: color 0.3s;
-      }
+let clock = new THREE.Clock();
+function animate() {
+    requestAnimationFrame(animate);
+    let delta = clock.getDelta();
 
-      nav a:hover {
-        color: #a51f1f;
-      }
+    // Move plane forward
+    plane.position.x += delta * 2;
 
-      header.hero {
-        background: linear-gradient(rgba(214, 40, 40, 0.7), rgba(214, 40, 40, 0.7)),
-          url('https://source.unsplash.com/1600x800/?aircraft,hangar') center/cover no-repeat;
-        color: white;
-        text-align: center;
-        padding: 6rem 2rem 5rem;
-        position: relative;
-      }
+    // Drop particles at plane's tail
+    addParticle(plane.position.x - 0.6, plane.position.y, plane.position.z);
 
-      header.hero h1 {
-        font-size: 3rem;
-        margin-bottom: 0.5rem;
-        animation: fadeInDown 1s ease-out;
-      }
+    // Update particles (fade and shrink)
+    for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].life -= delta * 0.5;
+        particles[i].mesh.scale.setScalar(particles[i].life);
+        particles[i].mesh.material.opacity = particles[i].life;
+        if (particles[i].life <= 0) {
+            scene.remove(particles[i].mesh);
+            particles.splice(i, 1);
+        }
+    }
 
-      header.hero p {
-        font-size: 1.3rem;
-        opacity: 0.95;
-        max-width: 700px;
-        margin: 0 auto;
-        animation: fadeInUp 1.2s ease-out;
-      }
+    // When plane goes off screen, fade in text
+    if (plane.position.x > 5) {
+        document.getElementById("overlay").style.opacity = 1;
+    }
 
-      .glass-box {
-        background: var(--glass);
-        padding: 2rem;
-        margin-top: -3rem;
-        border-radius: 10px;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        animation: fadeIn 1.2s ease-out;
-      }
-
-      .section-title {
-        color: var(--primary);
-        font-weight: 700;
-      }
-
-      section {
-        padding: 4rem 1.5rem;
-      }
-
-      ul li::marker {
-        color: var(--primary);
-      }
-
-      footer {
-        background-color: #222;
-        color: #ccc;
-        padding: 2rem 1.5rem;
-        text-align: center;
-      }
-
-      footer a {
-        color: #eee;
-      }
-
-      /* Animations */
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-
-      @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-
-      @keyframes fadeInDown {
-        from { opacity: 0; transform: translateY(-20px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-    </style>
-  </head>
-  <body>
-
-    <nav class="container-fluid">
-      <ul>
-        <li><img src="https://files.catbox.moe/d4tmw3.jpg" alt="AIR-TEC logo" class="logo" /></li>
-      </ul>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Careers</a></li>
-        <li><a href="#" role="button">Contact</a></li>
-      </ul>
-    </nav>
-
-    <header class="hero">
-      <h1>AIRCRAFT MAINTENANCE STAFFING</h1>
-      <p>Connecting elite aviation technicians with world-class employers</p>
-    </header>
-
-    <main class="container">
-      <section>
-        <div class="glass-box">
-          <h2 class="section-title">Our Mission</h2>
-          <p>
-            AIR-TEC specializes in sourcing, vetting, and placing certified aviation maintenance professionals across the nation.
-            Our commitment to operational excellence ensures our clients and technicians work in perfect alignment with the highest safety and quality standards.
-          </p>
-        </div>
-      </section>
-
-      <section>
-        <h2 class="section-title">Why Choose AIR-TEC?</h2>
-        <ul>
-          <li>Nationwide network of A&P certified technicians</li>
-          <li>Real-time availability and placement support</li>
-          <li>Deep expertise in MRO, FBO, and airline environments</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2 class="section-title">Contact Us</h2>
-        <p>
-          📧 <a href="mailto:contact@airtecservices.com">contact@airtecservices.com</a><br />
-          ☎️ (555) 123-4567
-        </p>
-      </section>
-    </main>
-
-    <footer>
-      <small><a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a></small>
-    </footer>
-
-  </body>
+    renderer.render(scene, camera);
+}
+animate();
+</script>
+</body>
 </html>
