@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plane Animation Test</title>
+<title>Plane Landing Animation</title>
 <style>
   body {
-    background: #f2f2f2; /* light gray background for testing */
+    background: #f2f2f2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,48 +16,36 @@
 
   .contact-animation {
     position: relative;
-    width: 100%;
-    max-width: 800px;
+    width: 800px;
     height: 200px;
     background: transparent;
     overflow: hidden;
-    border: 1px solid #ccc; /* test outline */
   }
 
+  /* Logo behind */
+  .logo {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Plane animation */
   .plane {
     position: absolute;
     top: 50%;
-    left: -200px;
+    left: -200px; /* start off-screen */
     transform: translateY(-50%);
     height: 80px;
-    animation: flyAcross 6s ease-in-out forwards;
+    animation: flyAndStop 4s ease-out forwards;
   }
 
-  .logo-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 48px;
-    font-weight: bold;
-    color: #c62828;
-    opacity: 0;
-    animation: fadeIn 3s ease forwards;
-    animation-delay: 3s;
-  }
-
-  @keyframes flyAcross {
+  @keyframes flyAndStop {
     0% {
       left: -200px;
     }
     100% {
-      left: 100%;
-    }
-  }
-
-  @keyframes fadeIn {
-    to {
-      opacity: 1;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
   }
 </style>
@@ -65,8 +53,8 @@
 <body>
 
 <div class="contact-animation">
-  <img src="plane.png" class="plane" alt="Air-Tec Plane">
-  <div class="logo-text">AIR‑TEC</div>
+  <img src="logo.png" class="logo" alt="Air-Tec Logo">
+  <img src="plane.png" class="plane" alt="Plane">
 </div>
 
 </body>
